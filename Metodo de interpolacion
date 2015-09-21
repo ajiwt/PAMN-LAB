@@ -1,0 +1,119 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cuenta_renglones(FILE *archivo);
+double *reserva_memoria(int cuadritos);
+void carga_archivos(FILE *archivo, double *x, double *fx);
+
+int main (int argc, char *argv[])
+{
+	
+	
+    int i=0;
+    //double x[4]={0.1, 0.4, 0.7, 1};
+    //double fx[4]={2.31, 3.36, 4.59, 6};
+    double x0=0,x1=0,x2=0,x3=0,f1=0,f2=0,f3=0;
+    
+    //double X = 0.2;
+    double X=0;
+    
+    
+    double *x =NULL;
+    double *fx=NULL;
+    FILE *arch=NULL; //no necesito que se llame igual que el parametro
+    int renglones = 0;
+    renglones = cuenta_renglones(arch);
+    printf("\n Renglones: %d\n\n", renglones);
+    
+  
+    x = reserva_memoria(renglones);
+    fx = reserva_memoria(renglones);
+    
+    
+    
+    
+    
+   printf("Ingrese el dato que desea aproximar: ");
+    scanf("%lf", &X);
+    
+    printf("Metodo de Lagrange para interpolacion numerica \n\n");
+    printf("\nLa tabla de datos es: \n\n");
+    printf("\n%10s %10s\n\n","x","f(x)");
+    for(i=0;i<4;i++)
+    {
+     printf("%10f %10f\n",x[i],fx[i]);
+    }
+    
+    printf("\nLa formula del polinomio de 1er orden es: \n\n");  
+    printf("\nf1(X)= (X-x1)/(x0-x1)*f(x0) + (X-x0)/(x1-x0)*f(x1)\n\n");
+    
+    x0= x[0];
+    x1= x[1];
+    f1 = (X-x1)/(x0-x1)*fx[0] + (X-x0)/(x1-x0)*fx[1];
+    printf("\nValores usados:  X= %f \t x0= %f \t x1= %f\n\n",X,x0,x1);
+    printf("f1= %f\n\n",f1);
+    
+    
+    printf("\nLa formula del polinomio de 2do orden es: \n\n");  
+    printf("\nf2(X)= (((X-x1)*(X-x2))/((x0-x1)*(x0-x2)))*f(x0) + (((X-x0)*(X-x2))/((x1-x0)*(x1-x2)))*f(x1) + (((X-x0)*(X-x1))/((x2-x0)*(x2-x1)))*f(x2)\n\n");
+    
+    x0= x[0];
+    x1= x[1];
+    x2= x[2];
+    f2 = (((X-x1)*(X-x2))/((x0-x1)*(x0-x2)))*fx[0] + (((X-x0)*(X-x2))/((x1-x0)*(x1-x2)))*fx[1] + (((X-x0)*(X-x1))/((x2-x0)*(x2-x1)))*fx[2];
+    printf("\nValores usados:  X= %f \t x0= %f \t x1= %f \t x2= %f\n\n",X,x0,x1,x2);
+    printf("f2= %f\n\n",f2);
+    
+    
+    printf("\nLa formula del polinomio de 3er orden es: \n\n");  
+    printf("\nf3(X)= (((X-x1)*(X-x2)*(X-x3))/((x0-x1)*(x0-x2)*(x0-x3)))*f(x0) + (((X-x0)*(X-x2)*(X-x3))/((x1-x0)*(x1-x2)*(x1-x3)))*f(x1) + (((X-x0)*(X-x1)*(X-x3))/((x2-x0)*(x2-x1)*(x2-x3)))*f(x2) + (((X-x0)*(X-x1)*(X-x2))/((x3-x0)*(x3-x1)*(x3-x2)))*f(x3) \n\n");
+    
+    x0= x[0];
+    x1= x[1];
+    x2= x[2];
+    x3= x[3];
+    f3 = (((X-x1)*(X-x2)*(X-x3))/((x0-x1)*(x0-x2)*(x0-x3)))*fx[0] + (((X-x0)*(X-x2)*(X-x3))/((x1-x0)*(x1-x2)*(x1-x3)))*fx[1] + (((X-x0)*(X-x1)*(X-x3))/((x2-x0)*(x2-x1)*(x2-x3)))*fx[2] + (((X-x0)*(X-x1)*(X-x2))/((x3-x0)*(x3-x1)*(x3-x2)))*fx[3];
+    printf("\nValores usados:  X= %f   x0= %f    x1= %f    x2= %f   x3= %f\n\n",X,x0,x1,x2,x3);
+    printf("f3= %f\n\n",f3);
+    
+    
+    getchar();
+    return 0;
+}
+int cuenta_renglones(FILE *archivo)
+{
+	char c = '\0';
+	int conde =0; 
+	if((archivo = fopen("tabla.txt", "r"))==NULL)
+	{
+		printf("El archivo no se pudo cargar :(");
+		getchar();
+		exit(0);
+	}
+	while(feof(archivo)==0)
+	{
+		c = fgetc(archivo);
+			if(c == '\n' || c==-1)
+				conde++; //contador
+				
+			
+	}
+	return conde;
+}
+double *reserva_memoria(int cuadritos) //la funcion devuelve la direccion de memoria del primer cuadrito
+{
+	double *ap;
+	
+	ap = (double*)malloc(cuadritos*sizeof(double));
+	if(ap==NULL)
+	{
+		printF("Error, No se pudo reservar la memoria");
+		getchar();
+		exit(0);
+	}
+	return ap;
+}
+void carga_archivos(FILE *archivo, double *x, double *fx)
+{
+	
+}
