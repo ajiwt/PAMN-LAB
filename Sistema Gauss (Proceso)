@@ -1,0 +1,61 @@
+#include <stdio.h>
+
+
+void imprimirSistema(float arreglo[][3],float b[3]);
+void normalizar(int renglon,float arreglo[][3],float b[3]);
+
+
+int main(int argc, char *argv[])
+{
+	int i,j,k,renglon;
+	float b[] = {9,24,4};
+	float sistema[3][3] = {{1,2,3},{4,5,6},{3,1,2}};
+	float renglonmodif[3] = {0,0,0};
+	float b_modif=0;
+	float constante = 0,x1 = 0, x2 = 0, x3 = 0;
+	
+	imprimirSistema(sistema,b);
+	
+	renglon = 0;
+	normalizar(renglon,sistema,b);
+	
+	
+}
+void imprimirSistema(float arreglo[][3],float b[3])
+{
+	int i,j;
+	
+	printf("Sistema de ecuaciones\n");
+	for(i=0;i<3;i++)
+	{
+		for(j=0;j<4;j++)
+		{
+			if(j==3)
+			{
+				printf("\t%.2f ", b[i]);
+			}
+			else
+			{
+				printf("\t%.2f ", arreglo[i][j]);
+			}
+		}puts("");
+	}
+
+}
+void normalizar(int renglon, float arreglo[][3],float b[3])
+{
+	int i=0;
+	float coeficientePivote = 0;
+	coeficientePivote = arreglo[renglon][renglon];
+	
+	for(i=0;i<4;i++)
+	{
+		if(i==3)
+			b[renglon] = b[renglon]/coeficientePivote;
+		else
+			arreglo[renglon][i] = arreglo[renglon][i] / coeficientePivote;
+	}
+	 printf("\n*** Haciendo 1 el coeficiente en la diagonal de la ecuacion %d ***",renglon+1);
+	 imprimirSistema(arreglo,b);
+	
+}
