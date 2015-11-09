@@ -1,0 +1,73 @@
+//Metodo de gauss-seidel
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+void cargarArchivos(float sistema[][3],float b[])
+{
+ 
+}
+
+
+//funcion que recibe el arreglo sistema por apuntador por eso no va 
+// numero en el primer parentesis
+void imprimirSistema(float arreglo[][3],float b[])
+{
+     
+}
+
+
+void noCerosDiagonal(float arreglo[][3])
+{
+         
+}
+
+
+int main (int argc, char *argv[])
+{
+    int i=0,j=0, iteracion=1;
+    //arreglo con los terminos independientes
+    float b[3]={4,24,9};
+    float sistema[3][3]={{3,1,2},{4,5,6},{1,2,3}};
+    float tolerancia = 0.1;
+    
+    float x1=0, x2=0, x3=0;
+    float x1ant=0, x2ant=0, x3ant=0;
+    float ex1=0, ex2=0, ex3=0;
+    
+    printf("Programa que implementa el metodo de GAUSS-SEIDEL\n");
+    cargarArchivos(sistema,b);
+    
+    printf("\n\nMatriz original y coeficientes b\n\n");
+    imprimirSistema(sistema,b);
+    
+    noCerosDiagonal(sistema);
+    
+    do{
+    x1ant = x1;                         
+    x2ant = x2;                         
+    x3ant = x3;                         
+        
+    x1 = (b[0] - sistema[0][1]*x2 -sistema[0][2]*x3) / sistema[0][0];
+    x2 = (b[1] - sistema[1][0]*x1 -sistema[1][2]*x3) / sistema[1][1];
+    x3 = (b[2] - sistema[2][0]*x1 -sistema[2][1]*x2) / sistema[2][2];
+    
+    //variables para guardar los errores
+    ex1 = fabs(x1-x1ant);
+    ex2 = fabs(x2-x2ant);
+    ex3 = fabs(x3-x3ant);
+    
+    printf("\n\nIteracion %d",iteracion);
+    
+    printf("\n\n\tX1 = %f\t\tError X1: %f",x1,ex1);
+    printf("\n\n\tX2 = %f\t\tError X2: %f",x2,ex2);
+    printf("\n\n\tX3 = %f\t\tError X3: %f",x3,ex3);
+    
+    iteracion = iteracion + 1;
+   
+    }while(ex1>tolerancia || ex2>tolerancia || ex3>tolerancia);  
+     
+    getchar();
+    return 0;
+}
